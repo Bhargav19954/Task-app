@@ -70,7 +70,7 @@ router.post('/tasks', auth, upload.single('image'),async (req, res) => {
     })
     try {
         await task.save()
-        res.status(200).send(task)
+        res.status(201).send(task)
     }
     catch (e) {
         res.status(500).send(e)
@@ -84,11 +84,9 @@ router.patch('/tasks/:id', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['description', 'target_date','status','title']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
-
     if (!isValidOperation) {
         return res.status(400).send({ error: 'Invalid updates!' })
     }
-
     try {
         const task = await Tasks.findOne({ _id: req.params.id, owner: req.user._id})
         if (!task) {
@@ -106,11 +104,9 @@ router.patch('/tasks/:id', auth, async (req, res) => {
 router.delete('/tasks/:id', auth, async (req, res) => {
     try {
         const task = await Tasks.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
-
         if (!task) {
             res.status(404).send()
         }
-
         res.send(task)
     } catch (e) {
         res.status(500).send()
