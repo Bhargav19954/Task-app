@@ -5,11 +5,9 @@ const taskRouter = require('./controllers/tasks');
 const userRouter = require('./controllers/users');
 
 app.use((req, res, next) => {
-    console.log("pass "+JSON.stringify(req.body));
     next();
 });
 
-//app.use(cors());
 
 app.use(express.json())
 
@@ -20,10 +18,8 @@ app.get('/', (req, res) => {
 app.use(taskRouter);
 app.use(userRouter);
 
-process.nextTick(()=>{
-    console.log("next tick")
-})
 
-app.listen(3000, () => {
+
+app.listen(process.env.PORT, () => {
     console.log("server is running")
 })

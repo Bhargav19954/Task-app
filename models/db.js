@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/task-manager", { useUnifiedTopology: true, useNewUrlParser: true }).then(
+mongoose.connect(process.env.MONGO_URL, { useUnifiedTopology: true, useNewUrlParser: true,useCreateIndex:true }).then(
     console.log("Database conneced...")
 ).catch();
